@@ -120,7 +120,7 @@ $.widget = function( name, base, prototype ) {
 	// inheriting from
 	basePrototype.options = $.widget.extend( {}, basePrototype.options );
 	$.each( prototype, function( prop, value ) {
-		if ( !( typeof value === 'function' ) ) {
+		if ( typeof value !== 'function' ) {
 			proxiedPrototype[ prop ] = value;
 			return;
 		}
@@ -248,7 +248,7 @@ $.widget.bridge = function( name, object ) {
 							"attempted to call method '" + options + "'" );
 					}
 
-					if ( !typeof( instance[ options ] ) === 'function' || options.charAt( 0 ) === "_" ) {
+					if ( typeof( instance[ options ] ) !== 'function' || options.charAt( 0 ) === "_" ) {
 						return $.error( "no such method '" + options + "' for " + name +
 							" widget instance" );
 					}
@@ -693,7 +693,7 @@ $.Widget.prototype = {
 		}
 
 		this.element.trigger( event, data );
-		return !( typeof( callback ) === 'function' &&
+		return !( ( typeof( callback ) === 'function' ) &&
 			callback.apply( this.element[ 0 ], [ event ].concat( data ) ) === false ||
 			event.isDefaultPrevented() );
 	}
